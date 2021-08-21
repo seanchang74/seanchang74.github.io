@@ -58,8 +58,8 @@ disqus_username: seanchang74
 # Baidu Analytics
 # ba_track_id: 4cc1f2d8f3067386cc5cdb626a202900
 # Google Analytics
-ga_track_id: 'UA-49627206-1'            # Format: UA-xxxxxx-xx
-ga_domain: huangxuan.me
+ga_track_id: 'G-0NFZZ06734'            # ga_measurement_id
+ga_domain: seanchang74.github.io
 
 
 
