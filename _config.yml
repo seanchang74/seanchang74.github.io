@@ -48,10 +48,10 @@ kramdown:
 disqus_username: seanchang74
 
 # Leancloud settings
-leancloud:
-  enable: true
-  app_id: EUgCfgtUr0d9eECRk5lDITvP-MdYXbMMI
-  app_key: sPfkRy7Qr6hfjpv7jUKiQWBT
+# leancloud:
+#   enable: true
+#   app_id: EUgCfgtUr0d9eECRk5lDITvP-MdYXbMMI
+#   app_key: sPfkRy7Qr6hfjpv7jUKiQWBT
 
 # Duoshuo settings
 # duoshuo_username: huxblog
