@@ -2,14 +2,14 @@
 layout:     post
 title:      "機器學習分析個案(3)"
 subtitle:   "銀行顧客資訊分群(分群研究)"
-date:       2021-12-19 12:00:00
+date:       2022-12-19 12:00:00
 author:     "SeanChang"
 header-img: "img/post-bg-clustering-case(1).jpg"
 tags:
     - MachineLearning
     - Clustering
 ---
-> 資料來源: https://www.kaggle.com/datasets/sharanmk/bank-marketing-term-deposit
+> 資料來源: [網址](https://www.kaggle.com/datasets/sharanmk/bank-marketing-term-deposit)
 
 ## 什麼是機器學習 ?
 
