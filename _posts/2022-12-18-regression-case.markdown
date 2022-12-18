@@ -29,7 +29,7 @@ tags:
 2. 接著使用`df.info()`查看各欄位的資料型態與欄位名稱，移除一些無意義的欄位(ex. **id**)。相似程度過高的欄位則可以進行欄位合併(ex. **citympg**和**highwaympg**)
 3. 使用Seaborn與Matplotlib進行簡易的視覺化呈現
 
-![Visualize_Feature_Price](/img/in-post/regression_case(1)/feature_price__corr.png)
+![Visualize_Feature_Price](/img/in-post/regression_case(1)/feature_price_corr.png)
 <small class="img-hint">使用迴歸圖顯示各特徵與**price**之間的相關性</small> 
 
 各特徵與price欄位之間的相關性
@@ -39,9 +39,9 @@ boreratio, horsepower
 - 負相關: avg_mpg
 
 ![Visualize_Feature_Category](/img/in-post/regression_case(1)/category_distri.png)
-<small class="img-hint>使用計數圖呈現object型態特徵中unique值的占比情形</small>
-[Price_Distribution](/img/in-post/regression_case(1)/price_distri.png)
-<small class="img-hint>使用長條圖的方式，展現price於各區間的分布情形</small>
+<small class="img-hint">使用計數圖呈現object型態特徵中unique值的占比情形</small>
+![Price_Distribution](/img/in-post/regression_case(1)/price_distri.png)
+<small class="img-hint">使用長條圖的方式，展現price於各區間的分布情形</small>
 
 根據上圖可以得知price主要集中於低價位，以**5000~15000**區間居多
 4. 針對object型態的資料，採用編碼方式進行轉換。在進行編碼轉換時，我個人比較建議使用**One-hot encoding**，因為**label encoding**
