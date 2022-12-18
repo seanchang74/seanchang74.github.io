@@ -226,7 +226,7 @@ tags:
   |    | **precision** | **recall** | **f1-score** | **support** |
         |:------------:|:-------------:|:----------:|:------------:|:------------:|
   | 0            | 0.95          | 0.84       | 0.89         | 58484        |
-  | 1            | 0.24          | 0.57       | 0.34         | 5475         |
+  | 1            | 0.24          | **0.57**       | 0.34         | 5475         |
   | accuracy     |               |            | 0.81         | 63959        |
   | macro avg    | 0.6          | 0.7       | 0.62         | 63959        |
   | weighted avg | 0.89          | 0.81       | 0.84         | 63959        |
@@ -280,4 +280,4 @@ tags:
 ## 參考資料
 
 1. [TQC+ Python 3.x機器學習基礎與應用特訓教材](https://www.books.com.tw/products/0010888910)
-2. [HeartDisease: Visualisation 📊 | Classification 🔮](https://www.kaggle.com/code/ricksan4ez/heartdisease-visualisation-classification)
+2. [HeartDisease: Visualisation 📊 Classification 🔮](https://www.kaggle.com/code/ricksan4ez/heartdisease-visualisation-classification)
