@@ -37,18 +37,18 @@ tags:
 ![Target_Distri](/img/in-post/classification_case(1)/target_distri.png)
 <small class="img-hint">圖1: 有無心臟病的人數分布圓餅圖</small>
 
-由上圖可以發現，本資料集大部分皆無心臟病其比例高達91.4%，可見資料分布極不平均。因此，較不建議僅使用 accuracy 去評判模型優劣。
+由上圖可以發現，本資料集大部分皆無心臟病其比例高達**91.4%**，可見資料分布極不平均。因此，較不建議僅使用 accuracy 去評判模型優劣。
 
 - 此外，針對有無心臟病的人分別取樣 20000 筆資料，查看他們其餘特徵的分布情形，希望發現特徵與患有心臟病之間是否存在相關性。 
 
-    >由於BMI特徵不重複值較多，故採用**stripplot**呈現，其餘皆使用countplot呈現計數狀況即可。
+    >由於BMI特徵不重複值較多，故採用**stripplot**呈現，其餘皆使用**countplot**呈現計數狀況即可。
   
     - BMI
     ![BMI_Plot](/img/in-post/classification_case(1)/stripplot.png)
     <small class="img-hint">圖2: BMI 與 HeartDisease 之間關係圖</small>
     - Smoking
     ![Smoking_Plot](/img/in-post/classification_case(1)/smoking.png)
-    <small class="img-hint">圖3: Smoke 與 HeartDisease 之間關係圖</small>
+    <small class="img-hint">圖3: Smoking 與 HeartDisease 之間關係圖</small>
     - AlcoholDrinking
     ![AlcoholDrinking_Plot](/img/in-post/classification_case(1)/alcohol.png)
     <small class="img-hint">圖4: AlcoholDrinking 與 HeartDisease 之間關係圖</small>
@@ -196,6 +196,7 @@ tags:
     | accuracy     |               |            | 0.92         | 63959        |
     | macro avg    | 0.72          | 0.55       | 0.57         | 63959        |
     | weighted avg | 0.89          | 0.92       | 0.89         | 63959        |
+    
     - 個人觀點
       1. 乍看之下，accuracy 高達 0.92，貌似表現優異，但如果仔細看一下就會發現大部分都是預測結果為 0 的貢獻，平均下來整體的數據才會如此亮眼。
       2. 可值得慶祝的是，如果模型通知你可能會得心臟病，有高達一半的機率是對的，但同時，由於 recall 值偏低，如果此模型真正用於醫療上，可能會有許多患者無法在心臟病早期時受到治療，進而導致病情惡化。
@@ -212,6 +213,7 @@ tags:
   | accuracy     |               |            | 0.92         | 63959        |
   | macro avg    | 0.76          | 0.52       | 0.51         | 63959        |
   | weighted avg | 0.89          | 0.92       | 0.88         | 63959        |
+    
     - 個人觀點
       1. 一樣有透過預測為 0 而美化整體數據的現象。 
       2. Recall 值比上面的羅吉斯迴歸更低僅有約 0.03，也就是說真正有心臟病的患者幾乎檢測不出來。雖然模型有 0.92 的 accuracy，但從實際層面上，根本無法使用。因為我們是要一個在少數有異常狀況時，能成功檢測出來的模型，而不是不管有沒有狀況，都是顯示無異常。
@@ -228,6 +230,7 @@ tags:
   | accuracy     |               |            | 0.81         | 63959        |
   | macro avg    | 0.6          | 0.7       | 0.62         | 63959        |
   | weighted avg | 0.89          | 0.81       | 0.84         | 63959        |
+  
   - 個人觀點
     1. 在 accuracy 上雖然比前兩個模型低了不少，但 recall 的部分卻有大幅度的提升，達到了 0.57 是個不錯的成績。
     2. 比較可惜的是精準度並不高，可能會有不少沒有心臟病的病人，被誤判成有心臟病。
@@ -244,8 +247,9 @@ tags:
   | accuracy     |               |            | 0.92         | 63959        |
   | macro avg    | 0.81          | 0.51       | 0.49         | 63959        |
   | weighted avg | 0.9          | 0.92       | 0.88         | 63959        |
-  - 個人觀點
-    1. 效果與支持向量機差不多，只不過 1 的 precision 更高了一些，但實際層面上距離能使用還有一大段距離。
+  
+  - 個人觀點 
+  1. 效果與支持向量機差不多，只不過 1 的 precision 更高了一些，但實際層面上距離能使用還有一大段距離。
 - KNN (`n_neighbors` = 12)
   - 混淆矩陣
     ![KNN_Matrix](/img/in-post/classification_case(1)/knn_confuse.png)
@@ -259,6 +263,7 @@ tags:
   | accuracy     |               |            | 0.91         | 63959        |
   | macro avg    | 0.69          | 0.51       | 0.5         | 63959        |
   | weighted avg | 0.88          | 0.91       | 0.88         | 63959        |
+  
   - 個人觀點
     1. 在 1 的 precision 上比支持向量機與隨機森林還要低，此外recall 表現與不怎麼樣，看來此資料集不太適合使用 KNN。
 
@@ -274,7 +279,5 @@ tags:
 
 ## 參考資料
 
-1. [Python資料科學學習手冊](https://www.books.com.tw/products/0010774364)
-2. [初探機器學習：使用Python](https://www.books.com.tw/products/0010764445)
-3. [新手村逃脫！初心者的 Python 機器學習攻略（iT邦幫忙鐵人賽系列書）](https://www.books.com.tw/products/0010867390)
-4. [Coursera Machine Learning Class](https://www.coursera.org/learn/machine-learning)
+1. [TQC+ Python 3.x機器學習基礎與應用特訓教材](https://www.books.com.tw/products/0010888910)
+2. [HeartDisease: Visualisation 📊 | Classification 🔮](https://www.kaggle.com/code/ricksan4ez/heartdisease-visualisation-classification)
