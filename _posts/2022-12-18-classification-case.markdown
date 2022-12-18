@@ -11,56 +11,88 @@ tags:
 ---
 > 資料來源: [網址](https://www.kaggle.com/datasets/kamilpytlak/personal-key-indicators-of-heart-disease)
 
-## 什麼是機器學習 ?
+## 分析步驟
+1. [資料清洗](#cleaning)
+2. [資料視覺化](#visualization)
+3. [統計分析與特徵相關性分析](#advanced_analysis)
+4. [資料分割與建置分類模型](#model_design)
+5. [模型訓練](#model_training)
+6. [模型評估](#model_evaluation)
+7. [結論](#conclusion)
 
-> “A computer program is said to learn
-from experience E with respect to some task T
-and some performance measure P, if its
-performance on T, as measured by P, improves
-with experience E.”
->
-> Tom Mitchell(1998)
+<h2 id="cleaning">資料清洗</h2>
+1. 檢查是否存在遺漏值，如果有遺漏值我傾向使用中位數填補 (本資料集無遺漏值)
+2. 檢查各欄位中數值分布情形，如果 nunique 值過小，代表欄位中重複值的比例偏高 (本資料集中除了 BMI 欄位外，大部分資料欄位中，皆有大量重複值的情形)
+3. 檢查每一欄位的dtype，搭配欄位說明檔案進行資料轉換
 
-簡單來說，機器學習就是讓電腦根據**歷史資料**(Experience)，建立可以被用來對**新進資料進行預測或分類**等功能(Task)的數學模型。而我們就是藉由**評估預測與實際值之間的誤差**(Performance)，來為各個數學模型進行排名。
-
-舉例來說，我們可以利用程式對一組包含該房屋坪數與售價的資料進行學習，然後對另一組僅有房屋坪數的資料去預測它的售價。
-
-在上面這個例子中
-* **資料(Experience)** 就是一開始那組(包含坪數與售價)用來建立數學模型的資料
-* **任務(Task)** 則是預測另一組房屋的售價
-* **評估(Performance)** 則是預測售價與實際售價之間的誤差 
-* 隨著資料數目的增加，誤差會變得更小
-
-但如果一個問題，有一個明確且能夠描述的規則，可以使得任務達成完美的零誤差，那麼該問題就**不需要**應用機器學習。
+處理邏輯: 
+1. map 方法將布林型態欄位中的 Yes 值轉換成 1，No 值轉換成 0，所謂布林型態欄位就是數值僅有 Yes 與 No 兩種。 
+2. 針對有大小順序的欄位(例如: GenHealth, AgeCategory)進行 Label Encoding。
+3. 其餘的 object 型態資料則使用One-Hot Encoding 解決，經過一系列的處理後，特徵數目從原本的18種增加至27種。
 
 ---
 
-## 機器學習的類別
+<h2 id="visualization">資料視覺化</h2>
+- 根據目標特徵 (本資料集為HeartDisease欄位)分布情形繪製一張圓餅圖
+![Target_Distri](/img/in-post/classification_case(1)/target_distri.png)
+<small class="img-hint">有無心臟病的人數分布圓餅圖</small>
 
-一般而言，機器學習可以被分類為三種主要形式 : 監督式學習(Supervised learning), 非監督式學習(Unsupervised learning)和增強式學習(Reinforcement learning)。
+由上圖可以發現，本資料集大部分皆無心臟病其比例高達91.4%，可見資料分布極不平均。因此，較不建議僅使用 accuracy 去評判模型優劣。
 
-* 監督式學習
-    * 將資料配適到某個任意類型的函數，需要一些事先標記過的訓練資料
-    * 可以進一步地再區分為分類(Classification)與迴歸(Regression)。
-        * 分類
-          ![Classification_Pic](/img/in-post/ml_intro/classification.jpg)
-          <small class="img-hint">預測離散(0或1)的標籤，藉由繪製一條(不一定線性)邊界線，將資料區分成兩種狀態</small>
-        * 迴歸
-          ![Regression_Pic](/img/in-post/ml_intro/regression.jpg)
-          <small class="img-hint">預測連續性的標籤，透過讓程式去觀察資料分布趨勢，繪製一條距離各資料點總和最小的線，去預測目標值</small>
+- 此外，針對有無心臟病的人分別取樣 20000 筆資料，查看他們其餘特徵的分布情形，希望發現特徵與患有心臟病之間是否存在相關性。 
 
-* 非監督式學習
-    * 針對無任何標籤的資料找出資料特性
-    * 可以進一步再區分為集群(Clustering)與降維(Dimensionality Reduction)
-        * 集群
-          ![Clustering_Pic](/img/in-post/ml_intro/clustering.jpg)
-          <small class="img-hint">從未建立標籤的資料中推理標籤，藉由不停地更改集群中心，將資料自動的指定到某個數目的離散群組</small>
-        * 降維
-          ![PCA_Pic](/img/in-post/ml_intro/pca.jpg)
-          <small class="img-hint">在大致保留重要特徵的前提下，藉由數學投影等技巧，將處於高維空間的資料，順利地轉換到低維空間中</small>
+>由於BMI特徵不重複值較多，故採用**stripplot**呈現，其餘皆使用countplot呈現計數狀況即可。
+
+- BMI
+![BMI_Plot](/img/in-post/classification_case(1)/stripplot.png)
+<small class="img-hint">圖2: BMI 與 HeartDisease 之間關係圖</small>
+> 補圖
 
 ---
 
+<h2 id="advanced_analysis">統計分析與特徵相關性分析</h2>
+<h3>特徵相關性分析</h3>
+根據上述圖2 ~ 圖18，可以看到以下相關性:
+- 正相關: Smoking, Stroke, PhysicalHealth, DiffWalking, AgeCategory, Diabetes, Asthma, KidneyDisease, SkinCancer
+    - 在 SleepTime 欄位中，睡太久或睡太少都有較高機率得心臟病，其中 6 ~ 8 小時的睡眠較佳。
+    - 在 Sex 欄位中可以看到，男性得心臟病的機率大於女性。
+    - 在 Race 欄位中可以看到，白人與印地安人得心臟病的機率大於其他種族。 
+- 負相關: AlcoholDrinking, PhysicalActivity, GenHealth
+- 無明顯相關: BMI, MentalHealth
+
+個人觀點:
+1. 大部分的特徵相關性其實透過常識判斷都算可以理解，那些經常運動、身體狀況越好的人，越不容易得心臟病;相對，如果有抽菸、中風、糖尿病等等狀況，越容易得心臟病。但最令我感到驚訝的是，喝酒並沒有增加患有心臟病的機率!如果不是親眼看見還真難令人相信。
+2. 另外，資料顯示性別與種族也是影響是否容易得心臟病的關鍵指標。但我個人認為資料會如此呈現，主要是與個人的飲食習慣有關。較高比例的歐美白人，攝取速食或是較重口味的食物頻率比其他種族高，所以導致發生這種現象。同樣，男性較女性也是如此，所以我認為性別或種族本身並不是提高得心臟病的因素，而是個人的飲食習慣。
+3. 我有嘗試刪除無相關特徵來提高模型效果，但效果並沒有太大改善，因此選擇以全部 27 種特徵作為後續模型的訓練樣本。
+
+<h3>敘述性統計分析</h3>
+1. 透過 describe 函數，檢查 float 型態資料的最大最小值、四分位數、標準差等資訊。
+2. 接著將數值型欄位進行標準化動作，避免各欄位的尺度大小不一，影響離群值的判斷。
+3. 將欄位繪製箱型圖檢視
+
+![Statistic_Plot](/img/in-post/classification_case(1)/statistic.jpg)
+<small class="img-hint">圖 19: 數值型欄位的箱型圖資訊</small>
+
+>根據圖 19 可發現資料大都集中於前 1/3，如果結合前面畫的 countplot會有更明顯的感受，但這些離群值應該拿掉嗎?
+> 
+>我覺得不妥，因為大部分這些「離群值」都是患有心臟病的資料，如果拿掉當然訓練效果會變好，但這個模型就失去訓練的意義了!
+
+---
+
+<h2 id="model_design">資料分割與建置分類模型</h2>
+由於是分類資料集，為了有更好的訓練效果，在切分資料集的時候添加`stratify`參數，可於切分時會根據訓練與測試集的大小比例，彈性分配適當數目的類別資料。我是採取8:2策略，其中訓練集占全部資料集的80% 共255836 筆，而測試集占剩下的 20%，共 63959 筆。
+模型訓練將會分成以下幾種方法:
+1. 羅吉斯迴歸 (分別採用 OvR 及 OvO 策略)
+2. 支持向量機 (使用linear, rbf, poly, sigmoid 四種不同 kernel 函數測試)
+3. Naïve Bayes
+4. 隨機森林
+5. KNN
+
+---
+
+<h2 id="model_training">模型訓練</h2>
+<h2 id="model_evaluation">模型評估</h2>
+<h2 id="conclusion">結論</h2>
 ## 參考資料
 
 1. [Python資料科學學習手冊](https://www.books.com.tw/products/0010774364)

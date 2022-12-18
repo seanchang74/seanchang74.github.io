@@ -25,7 +25,7 @@ tags:
 3. 使用Seaborn與Matplotlib進行簡易的視覺化呈現
 
 ![Visualize_Feature_Price](/img/in-post/regression_case(1)/feature_price_corr.png)
-<small class="img-hint">使用迴歸圖顯示各特徵與**price**之間的相關性</small> 
+<small class="img-hint">使用迴歸圖顯示各特徵與price之間的相關性</small> 
 
 各特徵與price欄位之間的相關性
 - 正相關: wheelbase, carlength, carwidth, curbweight, enginesize,
@@ -39,7 +39,8 @@ boreratio, horsepower
 <small class="img-hint">使用長條圖的方式，展現price於各區間的分布情形</small>
 
 根據上圖可以得知price主要集中於低價位，以**5000~15000**區間居多
-#### 針對object型態的資料採用編碼方式進行轉換。在進行編碼轉換時，我個人比較建議使用One-hot encoding，因為label encoding是將值對應一個特定數字，而數字本身的大小並無任何意義，但在模型訓練時可能會產生判斷特徵之間的優劣迷思。 
+> 針對object型態的資料採用編碼方式進行轉換。在進行編碼轉換時，我個人比較建議使用**One-hot encoding**，因為label encoding是將值對應一個特定數字，而**數字本身的大小並無任何意義**，但在模型訓練時可能會產生判斷特徵之間的優劣迷思。 
+
 經過 One-hot encoding 之後，特徵數從 24 種上升到 67 種
    
 ---
@@ -61,7 +62,8 @@ boreratio, horsepower
 2. 剔除對 price 欄位相關性過低的特徵(絕對值<0.5)
 3. 剔除兩個欄位彼此相似性過高的特徵(絕對值>0.9)
 
-#### 在經過篩選之後，僅取出12種特徵用來做後面的模型訓練
+> 在經過篩選之後，僅取出12種特徵用來做後面的模型訓練
+
 繪製熱點圖檢視
 
 ![Corr_Matrix](/img/in-post/regression_case(1)/corr_matrix.png)
