@@ -9,6 +9,16 @@ tags:
     - MachineLearning
     - Regression
 ---
+// mathjax 
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
 > 資料來源: [網址](https://www.kaggle.com/datasets/hellbuoy/car-price-prediction)
 
 ## 分析步驟
@@ -130,7 +140,7 @@ boreratio, horsepower
 2. 本次模型訓練雖然使用不同的方法改善線性迴歸模型，但從預測結果趨勢圖來看，其實並沒有相差太多，整體價格走勢是差不多的，在幾個極端值的表現上，也沒有明顯差異。
 3. 由結果來看，本資料集較適合決策樹類型的演算法(決策樹/隨機森林)，我個人猜測有可能是因為離群值過多，因此使用線性的方式較難找出資料之間的規律，雖然我這邊沒有列出決策樹的預測結果，但在筆記本中有提供程式參考。
 
-在最大僅使用 4 層的決策樹迴歸就達到 $R_{training}^2$: 0.942, $R_{testing}^2$: 0.917 的優異成績，使用隨機森林後，更達到 $R_{training}^2$: 0.984, $R_{testing}^2$: 0.958。
+在最大僅使用 4 層的決策樹迴歸就達到 $$ R_{training}^2 $$: 0.942, $$ R_{testing}^2 $$: 0.917 的優異成績，使用隨機森林後，更達到 $$ R_{training}^2 $$: 0.984, $$ R_{testing}^2 $$: 0.958。
 
 ---
 
