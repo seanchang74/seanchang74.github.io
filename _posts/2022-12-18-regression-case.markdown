@@ -8,8 +8,7 @@ header-img: "img/post-bg-regression-case(1).jpg"
 tags:
     - MachineLearning
     - Regression
----
-// mathjax 
+--- 
 <script>
   (function () {
     var script = document.createElement("script");
